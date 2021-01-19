@@ -11,22 +11,34 @@
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
+
+    <style>
+        .navbar .navContainer {
+            height: 56px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+    </style>
+
+
     <style>
         .content {
             height: 75%;
         }
-        
+
         .messageDiv {
             margin-top: 20px;
             margin-bottom: 50px;
         }
-        
+
         .toDoDiv {}
-        
+
         .custom-btn {
             font-size: 10px;
         }
-        
+
         .panel-footer {
             height: 10%;
             color: gray;
@@ -38,7 +50,7 @@
             color: #e20303;
             display: block;
         }
-        
+
         .clearAllContainer {
             width: 8.5rem;
             height: 50px;
@@ -54,6 +66,18 @@
 
 <body>
     <div class="container">
+        <div class="navbar" id="navbar-main">
+            <div class="navContainer home">
+                <div class="Logo">
+                </div>
+                <div id="userMenu" class="top--menu">
+                    <div class="goIn"><a href="../todo_customer/templates/todo_customer/login.html">로그인</a> <span>또는</span> <a
+                            onclick="openKakaoRegist()">회원가입</a></div>
+                    <div id="sidebar-main-trigger" class="icon">
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="header">
             <div class="page-header">
                 <h1>To-do List <small>with Django</small></h1>
@@ -63,7 +87,7 @@
         {% block content %}
         {% endblock content %}
 
-        
+
 
         <div class="panel-footer">
             실전예제로 배우는 Django. Project1-TodoList

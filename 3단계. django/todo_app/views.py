@@ -24,3 +24,11 @@ def deleteTodo(request):
     todo.delete()
     return HttpResponseRedirect(reverse('index'))
 
+def clearTodo(request):
+    Todo.objects.all().delete()
+    return HttpResponseRedirect(reverse('index'))
+
+def update(request):
+
+    return HttpResponseRedirect(reverse('index'))
+
