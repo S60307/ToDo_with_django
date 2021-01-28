@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{%block content%}
+<div class="content">
+    {% if user.is_authenticated %}
+    <div class="messageDiv">
+        <form action="./createTodo/" method="POST">{% csrf_token %}
+            <div class="input-group">
+                <input id="todoContent" name="content" type="text" class="form-control" placeholder="메모할 내용을 적어주세요">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">일정추가</button>
+                </span>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="toDoDiv">
+        <ul class="list-group">
+            {% for todo in todos %}
+            <form action="./deleteTodo/" method="GET">
+                <div class="input-group" name='todo1'>
+                    <li class="list-group-item">{{ todo.content }}</li>
+                    
+                    <input type="hidden" id="id" name="id" value="{{ todo.id }}"></input>
+                    
+                    <span class="input-group-addon">
+                        <button type="submit" class="custom-btn btn btn-danger">수정</button>
+                        <button type="submit" class="custom-btn btn btn-danger">삭제</button>
+                    </span>
+                    
+                </div>
+            </form>
+            
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    {% if user.is_authenticated %}
+    <div class="clearAllContainer">
+        <form action="./clearTodo/">
+            <span class="clearAllBtn">
+                <button type="submit" class="custom-btn btn btn-danger">전체 삭제</button>
+            </span>
+        </form>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock content %}
