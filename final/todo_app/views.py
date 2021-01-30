@@ -11,7 +11,7 @@ import json
 
 # Create your views here.
 
-# 제목 리스트
+
 def index(request):
 
     if request.method =="POST":
@@ -28,11 +28,11 @@ def index(request):
             context={'todos':todos}
             return render(request,'todo_app/index.html',context)
         elif request.POST["1"]=='대전·충청':
-            todos = Todo.objects.filter(city="대전·충청").order_by("schedule")
+            todos = Todo.objects.filter(city="대전,충청").order_by("schedule")
             context={'todos':todos}
             return render(request,'todo_app/index.html',context)
         elif request.POST["1"]=='대구·경북':
-            todos = Todo.objects.filter(city="대구·경북").order_by("schedule")
+            todos = Todo.objects.filter(city="대구,경북").order_by("schedule")
             context={'todos':todos}
             return render(request,'todo_app/index.html',context)
         elif request.POST["1"]=='부산':
@@ -82,7 +82,6 @@ def updateTodo(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id)
     if str(request.user) == str(todo.user):
         if request.method == 'POST':
-            print("1111111111111111111111111111111111111111")
             form = TodoForm(request.POST, instance=todo)
             if form.is_valid():
                 form.save()
