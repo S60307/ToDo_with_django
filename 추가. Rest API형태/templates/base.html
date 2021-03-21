@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+   
+    <!-- css내용 -->
+    <!-- 비공개 -->
+    
+    
+    
+    <title>축구 매칭 </title>
+    <!--로그인회원가입css-->
+    <style>
+        element.style {
+            width: 327px;
+        }
+
+        .navbar .navContainer {
+            height: 56px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        #app {
+            margin: 0 auto;
+            background-color: white;
+        }
+
+        body,
+        html {
+            margin: 0;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans CJK KR', 'Malgun Gothic', 'dotum', 'gulim', sans-serif;
+            color: #333;
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            transition: 0.25s;
+            -webkit-transition: 0.25s;
+            -moz-transition: 0.25s;
+            -o-transition: 0.25s;
+        }
+
+        a {
+            outline: none;
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .moreIconWrap {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+        .w400h {
+            color: #3540A5;
+            font-weight: 400;
+            float:right;
+        }
+
+
+        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        vertical-align: baseline;
+        }
+
+        :root {
+            --themeBgColor: white;
+            --themeColor: black;
+        }
+
+        .btn {
+            width: 100%;
+            background-color:rgb(218, 168, 60);
+            color: white;
+            border-radius: 6px;
+            border: none;
+            box-shadow: none;
+            padding: 8px 5px;
+            -webkit-transition: background-color 0.3s ease-out;
+            -moz-transition: background-color 0.3s ease-out;
+            -o-transition: background-color 0.3s ease-out;
+            transition: background-color 0.3s ease-out;
+            -webkit-appearance: none;
+            display: block;
+            text-align: center;
+            cursor: pointer;
+        }
+
+    </style>
+    <!--공지사항 css-->
+    <style>
+
+        .match--option.isMix:before {
+            background-color: #FFC645;
+        }
+
+        .match--option {
+            display: flex;
+            align-items: center;
+        }
+
+        .label--match-option span:before {
+            content: '·';
+            padding-right: 3px;
+        }
+
+        element.style {
+            opacity: 1;
+            width: 840px;
+            transform: translate3d(0px, 0px, 0px);
+        }
+
+        .carousel--container {
+            border-bottom: 10px solid #eee;
+        }
+
+        .container .slick-dotted.slick-slider {
+            margin-bottom: 0;
+        }
+
+        .carousel--wrapper.slick-initialized .carousel--hero {
+            display: block;
+        }
+
+        .carousel--container .carousel--wrapper .slick-dots {
+            display: flex;
+            bottom: 50px;
+            padding: 0 15px;
+            width: initial;
+            right: 20px;
+        }
+
+        .slick-dots {
+            position: absolute;
+            bottom: -25px;
+            display: block;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-align: center;
+        }
+
+        .slick-list {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .carousel--hero {
+            padding: 20px 5px;
+            background-color: white;
+            margin-bottom: 6px;
+        }
+
+        ol,
+        ul,
+        li {
+            list-style: none;
+        }
+
+        .carousel--img img {
+            height: 320px;
+        }
+
+        .carousel--img img {
+            width: 100%;
+            border-radius: 20px;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .slick-slide img.carousel--img_m{
+            display: block;
+        }
+
+        .slick-slide img.carousel--img_pc {
+            display: none;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        .slick-slide {
+            display: none;
+            float: left;
+            height: 100%;
+            min-height: 1px;
+        }
+
+        .slick-track {
+            position: relative;
+            top: 0;
+            left: 0;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .slick-slider {
+            position: relative;
+            display: block;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -khtml-user-select: none;
+            -ms-touch-action: pan-y;
+            touch-action: pan-y;
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+    <!--날짜-->
+    <style>
+        #app #dateNav .tabWrap {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 9px;
+        }
+
+        #dateNav .tabWrap {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 9px;
+        }
+        .div2 {
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        .clicked {
+            background-color: #FFC645;
+        }
+    </style>
+
+
+    <title>To-Do</title>
+</head>
+
+<body>
+    <div class="container" id="plabContainer">
+        <!--최고 상단 로그인 회원가입-->
+        <div class="navbar" id="navbar-main">
+            <div class="navContainer home">
+                <div class="newLogo">
+                    <a href="/index"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Emoji_u26bd_transparent.svg" alt="플랩풋볼"></a>
+                </div>
+                {% if user.is_authenticated %}
+
+                <div id="userMenu" class="top--menu">
+                    <div class="mainTab">
+                        <!-- 로그아웃, 내정보 페이지(아직 안만듬) -->
+                        <a><img src="https://www.flaticon.com/svg/vstatic/svg/17/17772.svg?token=exp=1611714355~hmac=fbe29a4c9b0100e4d947b7ce17743f19"
+                                alt="나의 정보"></a>
+                    </div>
+                    <a href="{%url 'logout'%}">로그아웃</a>
+                    <div id="sidebar-main-trigger" class="icon">
+                    </div>
+                </div>
+                {% csrf_token %} <input type="hidden" /></form>
+                </li>
+                {% else %}
+                <div id="userMenu" class="top--menu">
+                    <div class="goIn">
+                        <a href="{%url 'login'%}">로그인</a>
+                        <span>또는</span>
+                        <a href="{%url 'signup'%}">회원가입</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% block content %}
+        
+        {% endblock content %}
+        <div id="footer">
+            <div class="footerWrap">
+
+                <div class="footerNav">
+                    <ul>
+                        <h3>매치</h3>
+                        <li>
+                            <a href="/">모든 매치</a>
+                        </li>
+                        <li>
+                            <a>여성 매치</a>
+                        </li>
+                        <li>
+                            <a>남녀모두 매치</a>
+                        </li>
+                        <li>
+                            <a>초급 매치</a>
+                        </li>
+                        <li>
+                            <a>중급 매치</a>
+                        </li>
+                    </ul>
+                    <ul class="footerDul">
+                        <h3>서비스 지역</h3>
+                        <li>
+                            <a>서울</a>
+                        </li>
+                        <li>
+                            <a>경기</a>
+                        </li>
+                        <li>
+                            <a>인천</a>
+                        </li>
+                        <li>
+                            <a>대전·충청</a>
+                        </li>
+                        <li>
+                            <a>대구·경북</a>
+                        </li>
+                        <li>
+                            <a>울산</a>
+                        </li>
+                        <li>
+                            <a>부산</a>
+                        </li>
+                        <li>
+                            <a>광주</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        
+                    </ul>
+                    <ul>
+                        
+                    </ul>
+                </div>
+                <div class="company">
+                    
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!--container-->
+</body>
+
+</html>

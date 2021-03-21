@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{%block content%}
+
+<div id="app">
+  <div class="carousel--container">
+    <ul class="carousel--wrapper slick-initialized slick-slider slick-dotted">
+      <div class="slick-list draggable">
+        <div class="slick-track" style="opacity: 1; width: 352px; transform: translate3d(0px, 0px, 0px);">
+          <li class="carousel--hero slick-slide slick-current slick-active slick-center" tabindex="0" role="tabpanel"
+            id="slick-slide10" aria-describedby="slick-slide-control10" style="width: 352px;" data-slick-index="0"
+            aria-hidden="false">
+              <div class="carousel--img">
+                <img src="https://image.fmkorea.com/files/attach/new/20180318/486616/17123471/984397391/8bb7b0b43ca1996c247aee82e7cd913e.jpg" class="carousel--img_m">
+                <img src="https://image.fmkorea.com/files/attach/new/20180318/486616/17123471/984397391/8bb7b0b43ca1996c247aee82e7cd913e.jpg" class="carousel--img_pc"> 
+              </div>
+            </a>
+          </li>
+        </div>
+      </div>
+      
+    </ul>
+  </div>
+
+  <div class="main--match--container">
+    <div class="main__filter">
+      <form class="main__match-filter" method="POST" action="{% url 'index'%}">
+        {% csrf_token %}
+        <ul>
+          <button class="div2" type="submit" name="1" value="전국">전국</button>
+          <button class="div2" type="submit" name="1" value="서울">서울</button>
+          <button class="div2" type="submit" name="1" value="경기">경기</button>
+          <button class="div2" type="submit" name="1" value="인천">인천</button>
+          <button class="div2" type="submit" name="1" value="대전·충청">대전·충청</button>
+          <button class="div2" type="submit" name="1" value="대구·경북">대구·경북</button>
+          <button class="div2" type="submit" name="1" value="부산">부산</button>
+          <button class="div2" type="submit" name="1" value="울산">울산</button>
+          <button class="div2" type="submit" name="1" value="광주">광주</button>
+        </ul>
+      </form>
+
+      <script>
+        var div2 = document.getElementsByClassName("div2");
+
+        function handleClick(event) {
+          console.log(event.target);
+          // console.log(this);
+          // 콘솔창을 보면 둘다 동일한 값이 나온다
+
+          console.log(event.target.classList);
+
+          if (event.target.classList[1] === "clicked") {
+            event.target.classList.remove("clicked");
+          } else {
+            for (var i = 0; i < div2.length; i++) {
+              div2[i].classList.remove("clicked");
+            }
+
+            event.target.classList.add("clicked");
+          }
+        }
+
+        function init() {
+          for (var i = 0; i < div2.length; i++) {
+            div2[i].addEventListener("click", handleClick);
+          }
+        }
+
+        init();
+      </script>
+
+    </div>
+
+    <div class="list--match-schedule--container">
+      {% if user.is_authenticated %}
+      {% if todos %}
+      <ul>
+        {% for todo in todos %}
+        <li class="list--match-schedule--item">
+          <a>
+            <div class="list--match-schedule__time">
+              <p>{{ todo.schedule | date:'n월 j일' }}</p>
+              <p>{{ todo.time }}</p>
+            </div>
+            <div class="list--match-schedule__info" onclick="location.href='{% url 'detailTodo' todo.id %}'">
+              <div class="match-list__title">
+                <h3>{{ todo.title }}</h3>
+              </div>
+              <div class="label--match-option">
+                <span class="match--option isMen">
+                  {{ todo.sex }}
+                </span>
+                <span>
+                  {{ todo.number }}명
+                </span>
+                <span>
+                  수준 : {{ todo.level }}
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <input type="button" class="btn btn-info btn-sm like" name="{{ todo.id }}" value="신청하기"
+                style="margin-top: 7px">
+              <p id="count-{{ todo.id }}" style="font:bold 1em; margin-top: 3px">
+                신청자&nbsp;{{ todo.apply.all.count }}명</p>
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script type="text/javascript">
+              $(".like").click(function () { // .like 버튼을 클릭 감지
+                var pk = $(this).attr('name')
+                $.ajax({ // ajax로 서버와 통신
+                  type: "POST", // 데이터를 전송하는 방법
+                  url: "{% url 'applyTodo' %}", // 통신할 url을 지정
+                  data: { 'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}' }, // 서버로 데이터 전송시 옵션, pk를 넘겨야 어떤 video인지 알 수 있음
+                  dataType: "json",
+                  success: function (response) { // 성공
+                    alert(response.message);
+                    $("#count-" + pk).html("신청자&nbsp;" + response.apply_count + "명"); // 좋아요 개수 변경
+                  },
+                });
+              })
+            </script>
+
+
+          </a>
+
+
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <div class="list--match-schedule__noItem">
+        <h3>등록된 매치가 없습니다</h3> 
+        <p>다른 날짜 혹은 다른 검색 조건을 적용해보세요 :)</p>
+      </div>
+      {% endif %}
+      {% else %}
+      <div class="list--match-schedule__noItem">
+        <h3>로그인 먼저 하세요</h3> 
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if user.is_authenticated %}
+  <div id="matchApply">
+    <div class="letsPlab">
+      <div class="lpWrapper">
+        <div class="btnWrap"><button type="button" class="btn letsplab" onclick="location.href='{% url 'createTodo'%}'"
+            style="background-color: rgb(218, 168, 60); color: rgb(255, 255, 255);">
+            <p>일정등록하기</p>
+            <!---->
+          </button></div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+
+
+
+</div> <!-- app -->
+
+
+
+
+
+{% endblock content %}

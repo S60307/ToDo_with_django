@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{%block content%}
+
+
+
+<div id="app">
+    
+
+    <div class="contentWrapper matchDetail">
+        <div class="matchWrap">
+
+            <div class="sectionWrap">
+                <div class="stadSec">
+                    <div class="matchTime">
+                        <p>{{ todo.schedule | date:'n월 j일' }} {{ todo.time }}</p>
+                    </div>
+                    <div class="matchPlace">
+                        <h1 class="txtH w700h"><a></a>{{ todo.title }}</a></h1>
+                    </div>
+                    {% if user.is_authenticated %}
+                        
+                    <div class="wtgTool">
+                        <a class="txt1 w400h" href="{% url 'updateTodo' todo.id %}">일정수정 </a><br> 
+                        <a class="txt1 w400h" href="{% url 'deleteTodo' todo.id %}">일정삭제 </a>
+                    </div>
+                        
+                    {% endif %}
+                    <div id="matchDetailApp" class="match-info__fee">
+                        <div class="matchFee"><span>참가비</span>
+                            <p>10,000원</p>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div id="matchLevel" class="stadSec">
+                    <div class="titleWrap">
+                        <h3>특이사항</h3>
+                    </div>
+                    <div class="match-detail__notice corona19-shower">
+                        <h3>🚫샤워실 이용 중단</h3>
+                        <p>코로나 대응 조치가 격상됨에 따라 샤워장 표기가 사용 불가로 변경됐습니다. 해당 기간 동안 샤워장을 이용하지 않도록 권고 드립니다.</p>
+                    </div>
+                </div>
+
+                <div class="stadSec" id="mnRule">
+                    <div class="titleWrap">
+                        <h3>진행 방식</h3>
+                    </div>
+                    <div class="plabfitFeature">
+                        <ul>
+                            <li>
+                                <span>진행 인원</span>
+                                <p>{{ todo.number }}명</p>
+                            </li>
+                            <li>
+                                <span>Level</span>
+                                <p>{{ todo.level }}</p>
+                            </li>
+                            <li>
+                                <span>진행 시간</span>
+                                <p><strong>1시간 30분</strong></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            
+                <div class="stadSec" id="mnTerm">
+                    <div class="titleWrap">
+                        <h3>환급 규정</h3>
+                    </div>
+                    <div class="stadInner">
+                        <ul class="matchRule">
+                            <h4>일반</h4>
+                            <li>매치 시간 기준 (ex.20:00)</li>
+                            <li>2일 전 취소 시: 전액 환급</li>
+                            <li>1일 전 취소 시: 80% 환급</li>
+                            <li>당일 1시간 30분 전까지 취소 시: 20% 환급 (ex. ~18:30)</li>
+                            <li>당일 1시간 30분 미만 취소 시: 0% (ex.18:30~20:00)</li>
+                            <p><strong>취소하지 않고 불참시 페어플레이 포인트가 차감되어 향후 이용에 제한이 있습니다.</strong></p>
+                        </ul>
+                        <ul class="matchRule">
+                            <h4>특수 (우천)</h4>
+                            <li>매치 시간 기준 (ex.20:00)</li>
+                            <li>당일 00시부터 1시간 30분 전까지 취소 시 : 100% 환급 (ex. ~18:30)</li>
+                            <li>당일 1시간 30분 미만 취소 시 : 0% (ex.18:30~20:00)</li>
+                            <p><strong>취소하지 않고 불참시 페어플레이 포인트가 차감되어 향후 이용에 제한이 있습니다.</strong></p>
+                        </ul>
+                    </div>
+                </div>
+
+
+
+
+
+                <div id="matchApply">
+                    <div class="letsPlab">
+                        <div class="lpWrapper">
+                            <div>
+                                <input type="button" class="btn btn-info btn-sm like" name="{{ todo.id }}" value="신청하기"
+                                  style="margin-top: 7px">
+                                <p id="count-{{ todo.id }}" style="font:bold 1em; margin-top: 3px">
+                                  신청자&nbsp;{{ todo.apply.all.count }}명</p>
+                              </div>
+                  
+                              <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+                              <script type="text/javascript">
+                                $(".like").click(function () { // .like 버튼을 클릭 감지
+                                  var pk = $(this).attr('name')
+                                  $.ajax({ // ajax로 서버와 통신
+                                    type: "POST", // 데이터를 전송하는 방법
+                                    url: "{% url 'applyTodo' %}", // 통신할 url을 지정
+                                    data: { 'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}' }, // 서버로 데이터 전송시 옵션, pk를 넘겨야 어떤 video인지 알 수 있음
+                                    dataType: "json",
+                                    success: function (response) { // 성공
+                                      alert(response.message);
+                                      $("#count-" + pk).html("신청자&nbsp;" + response.apply_count + "명"); // 좋아요 개수 변경
+                                    },
+                                    error: function (request, status, error) { // 실패
+                                      alert("로그인이 필요합니다.")
+                                      window.location.replace("/video/login/") // 로그인 페이지로 넘어가기
+                                    },
+                                  });
+                                })
+                              </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
